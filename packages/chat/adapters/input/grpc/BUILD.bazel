@@ -1,0 +1,27 @@
+load("@io_bazel_rules_go//go:def.bzl", "go_library")
+
+go_library(
+    name = "grpc",
+    srcs = [
+        "converters.go",
+        "create_conversation.go",
+        "grpc.go",
+        "list_conversations.go",
+        "pull_messages.go",
+        "stream_messages.go",
+    ],
+    importpath = "chat/packages/chat/adapters/input/grpc",
+    visibility = ["//visibility:public"],
+    deps = [
+        "//packages/chat/core/conversation/ports",
+        "//packages/protos",
+        "@org_golang_google_grpc//metadata",
+        "@org_golang_google_protobuf//types/known/timestamppb",
+    ],
+)
+
+alias(
+    name = "go_default_library",
+    actual = ":grpc",
+    visibility = ["//visibility:public"],
+)

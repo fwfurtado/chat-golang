@@ -1,0 +1,19 @@
+load("@io_bazel_rules_go//go:def.bzl", "go_library")
+
+go_library(
+    name = "redis",
+    srcs = [
+        "stream.go",
+        "subscribe.go",
+        "subscription.go",
+    ],
+    importpath = "chat/packages/stream/redis",
+    visibility = ["//visibility:public"],
+    deps = ["@com_github_go_redis_redis_v8//:go_default_library"],
+)
+
+alias(
+    name = "go_default_library",
+    actual = ":redis",
+    visibility = ["//visibility:public"],
+)
