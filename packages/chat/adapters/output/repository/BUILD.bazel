@@ -1,0 +1,27 @@
+load("@io_bazel_rules_go//go:def.bzl", "go_library")
+
+go_library(
+    name = "repository",
+    srcs = [
+        "converters.go",
+        "filter_messages.go",
+        "list.go",
+        "repository.go",
+        "save_conversation.go",
+        "save_message.go",
+    ],
+    importpath = "chat/packages/chat/adapters/output/repository",
+    visibility = ["//visibility:public"],
+    deps = [
+        "//packages/chat/adapters/output/gen/db",
+        "//packages/chat/core/conversation/domain",
+        "//packages/chat/core/conversation/ports",
+        "//packages/chat/core/message/domain",
+    ],
+)
+
+alias(
+    name = "go_default_library",
+    actual = ":repository",
+    visibility = ["//visibility:public"],
+)

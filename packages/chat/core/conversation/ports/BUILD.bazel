@@ -1,0 +1,21 @@
+load("@io_bazel_rules_go//go:def.bzl", "go_library")
+
+go_library(
+    name = "ports",
+    srcs = [
+        "driven.go",
+        "driver.go",
+    ],
+    importpath = "chat/packages/chat/core/conversation/ports",
+    visibility = ["//visibility:public"],
+    deps = [
+        "//packages/chat/core/conversation/domain",
+        "//packages/chat/core/message/domain",
+    ],
+)
+
+alias(
+    name = "go_default_library",
+    actual = ":ports",
+    visibility = ["//visibility:public"],
+)

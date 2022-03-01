@@ -25,7 +25,7 @@ type ConversationFilter struct {
 type ConversationSummary struct {
 	ID          int64
 	Name        string
-	UnreadCount int
+	UnreadCount int64
 }
 
 type MessageView struct {
@@ -46,6 +46,7 @@ type ConversationController interface {
 	ListConversations(params *CurrentUserParam) ([]*ConversationSummary, error)
 	PullUnread(filter *ConversationFilter) ([]*MessageView, error)
 	AppendMessage(params *NewMessageParam) (*MessageView, error)
+	StreamMessages(filter *ConversationFilter) (<-chan *MessageView, error)
 }
 
 type ConversationUseCase interface {

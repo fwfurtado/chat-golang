@@ -19,7 +19,7 @@ const _ = grpc.SupportPackageIsVersion7
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type ConversationServiceClient interface {
 	ListConversations(ctx context.Context, in *FilterByParticipant, opts ...grpc.CallOption) (*ListConversationsResponse, error)
-	CreateConversation(ctx context.Context, in *CreateConversationRequest, opts ...grpc.CallOption) (*Conversation, error)
+	CreateConversation(ctx context.Context, in *CreateConversationRequest, opts ...grpc.CallOption) (*ConversationSummary, error)
 	PullUnreadMessages(ctx context.Context, in *FilterConversationByOwner, opts ...grpc.CallOption) (*ListMessagesResponse, error)
 	ListenMessages(ctx context.Context, in *FilterMessages, opts ...grpc.CallOption) (ConversationService_ListenMessagesClient, error)
 }
@@ -41,8 +41,8 @@ func (c *conversationServiceClient) ListConversations(ctx context.Context, in *F
 	return out, nil
 }
 
-func (c *conversationServiceClient) CreateConversation(ctx context.Context, in *CreateConversationRequest, opts ...grpc.CallOption) (*Conversation, error) {
-	out := new(Conversation)
+func (c *conversationServiceClient) CreateConversation(ctx context.Context, in *CreateConversationRequest, opts ...grpc.CallOption) (*ConversationSummary, error) {
+	out := new(ConversationSummary)
 	err := c.cc.Invoke(ctx, "/chat.ConversationService/CreateConversation", in, out, opts...)
 	if err != nil {
 		return nil, err
@@ -96,7 +96,7 @@ func (x *conversationServiceListenMessagesClient) Recv() (*Message, error) {
 // for forward compatibility
 type ConversationServiceServer interface {
 	ListConversations(context.Context, *FilterByParticipant) (*ListConversationsResponse, error)
-	CreateConversation(context.Context, *CreateConversationRequest) (*Conversation, error)
+	CreateConversation(context.Context, *CreateConversationRequest) (*ConversationSummary, error)
 	PullUnreadMessages(context.Context, *FilterConversationByOwner) (*ListMessagesResponse, error)
 	ListenMessages(*FilterMessages, ConversationService_ListenMessagesServer) error
 }
@@ -108,7 +108,7 @@ type UnimplementedConversationServiceServer struct {
 func (UnimplementedConversationServiceServer) ListConversations(context.Context, *FilterByParticipant) (*ListConversationsResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method ListConversations not implemented")
 }
-func (UnimplementedConversationServiceServer) CreateConversation(context.Context, *CreateConversationRequest) (*Conversation, error) {
+func (UnimplementedConversationServiceServer) CreateConversation(context.Context, *CreateConversationRequest) (*ConversationSummary, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method CreateConversation not implemented")
 }
 func (UnimplementedConversationServiceServer) PullUnreadMessages(context.Context, *FilterConversationByOwner) (*ListMessagesResponse, error) {

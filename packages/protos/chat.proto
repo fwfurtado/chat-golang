@@ -7,16 +7,9 @@ option go_package = "chat/pb";
 import "google/protobuf/timestamp.proto";
 
 message Participant {
-  string id = 1;
+  int64 id = 1;
 }
 
-message Conversation {
-  string id = 1;
-  string name = 2;
-  google.protobuf.Timestamp created_at = 4;
-  repeated Participant participants = 5;
-  repeated Message messages = 6;
-}
 
 enum MessageState {
   MESSAGE_STATE_UNKNOWN = 0;
@@ -26,7 +19,7 @@ enum MessageState {
 }
 
 message Message {
-  string id = 1;
+  int64 id = 1;
   string text = 2;
   MessageState state = 3;
   Participant sender = 4;
@@ -36,11 +29,11 @@ message Message {
 
 
 message FilterByParticipant {
-  string participant_id = 1;
+  int64 participant_id = 1;
 }
 
 message ConversationSummary {
-  string id = 1;
+  int64 id = 1;
   string name = 2;
   google.protobuf.Timestamp created_at = 4;
   int64 unread_count = 5;
@@ -49,32 +42,32 @@ message ConversationSummary {
 }
 
 message ListConversationsResponse {
-  repeated ConversationSummary conversation = 1;
+  repeated ConversationSummary conversations = 1;
 }
 
 message CreateConversationRequest {
   string name = 1;
-  string owner_id = 2;
+  int64 owner_id = 2;
 }
 
 message FilterConversationByOwner {
-  string owner_id = 1;
-  string conversation_id = 2;
+  int64 owner_id = 1;
+  int64 conversation_id = 2;
 }
 
 message FilterMessages {
-  string conversation_id = 1;
-  string participant_id = 2;
+  int64 conversation_id = 1;
+  int64 participant_id = 2;
 }
 
 message ListMessagesResponse {
-  repeated Message message = 1;
+  repeated Message messages = 1;
 }
 
 
 service ConversationService {
   rpc ListConversations(FilterByParticipant) returns (ListConversationsResponse) {}
-  rpc CreateConversation(CreateConversationRequest) returns (Conversation) {}
+  rpc CreateConversation(CreateConversationRequest) returns (ConversationSummary) {}
   rpc PullUnreadMessages(FilterConversationByOwner) returns (ListMessagesResponse) {}
   rpc ListenMessages(FilterMessages) returns (stream Message) {}
 }

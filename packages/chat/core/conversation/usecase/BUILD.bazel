@@ -1,0 +1,26 @@
+load("@io_bazel_rules_go//go:def.bzl", "go_library")
+
+go_library(
+    name = "usecase",
+    srcs = [
+        "append_message.go",
+        "converters.go",
+        "create.go",
+        "list.go",
+        "unread.go",
+        "usecase.go",
+    ],
+    importpath = "chat/packages/chat/core/conversation/usecase",
+    visibility = ["//visibility:public"],
+    deps = [
+        "//packages/chat/core/conversation/domain",
+        "//packages/chat/core/conversation/ports",
+        "//packages/chat/core/message/domain",
+    ],
+)
+
+alias(
+    name = "go_default_library",
+    actual = ":usecase",
+    visibility = ["//visibility:public"],
+)

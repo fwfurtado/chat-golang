@@ -2,6 +2,7 @@ load("@bazel_gazelle//:def.bzl", "gazelle")
 
 # gazelle:prefix chat
 # gazelle:proto disable_global
+# gazelle:go_naming_convention import_alias
 gazelle(name = "gazelle")
 
 gazelle(
