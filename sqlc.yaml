@@ -1,0 +1,7 @@
+version: 1
+packages:
+  - path: "packages/chat/adapters/output/gen/db"
+    name: "queries"
+    engine: "postgresql"
+    schema: "packages/chat/configs/db/migrations/"
+    queries: "packages/chat/configs/db/queries/"
