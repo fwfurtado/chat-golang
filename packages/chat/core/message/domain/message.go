@@ -2,6 +2,7 @@ package domain
 
 import (
 	"errors"
+	"strings"
 	"time"
 )
 
@@ -16,6 +17,15 @@ var messageStateMap = map[State]string{
 
 func (s State) String() string {
 	return messageStateMap[s]
+}
+
+func StateFromString(state string) State {
+	for k, v := range messageStateMap {
+		if v == strings.ToLower(state) {
+			return k
+		}
+	}
+	return Unknown
 }
 
 var (
